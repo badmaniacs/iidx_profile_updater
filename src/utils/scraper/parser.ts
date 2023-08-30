@@ -43,6 +43,7 @@ export const parseInfo = async (ver: string) => {
     .text()
     .split(" ")
     .filter((item) => item !== "");
+  const qproImgUrl = cheerio.load(info.data)(".qpro-img img").attr("src");
   const djData = {
     djName: infoArray[2],
     region: infoArray[4],
@@ -74,8 +75,9 @@ export const parseInfo = async (ver: string) => {
         SOFLAN: anotherInfoArray[15].match(radarRegex),
         TOTAL: anotherInfoArray[16].match(radarRegex),
       },
-      ver: parseInt(ver),
     },
+    qpro: "https://p.eagate.573.jp/" + qproImgUrl,
+    ver: parseInt(ver),
   };
   return djData;
 };

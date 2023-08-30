@@ -39,7 +39,6 @@ const useUpdate = () => {
         ...newUser.getScoreData(),
       },
       userId: userId,
-      ver: parseInt(ver),
     };
     setStatus("데이터를 서버에 전송합니다");
     try {

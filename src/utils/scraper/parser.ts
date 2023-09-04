@@ -92,7 +92,9 @@ const scoreParser = async (
   const scoreData: musicData[] = [];
   let offset = 0;
   while (true) {
-    setStatus(`${mode}모드의 레벨${level} ${offset + 1}페이지의 데이터 로딩`);
+    setStatus(
+      `${mode}모드 레벨${level + 1} ${offset + 1}페이지의 데이터 로딩`
+    );
     const score = await iidxApi.getScore(ver, level, mode, offset * 50);
     const $ = cheerio.load(score.data);
     const html = cheerio.load(score.data)(".series-difficulty").html();
@@ -117,7 +119,7 @@ const scoreParser = async (
         ?.trim();
       scoreData.push({
         music_name,
-        level: level,
+        level: level + 1,
         difficulty,
         rank: rank![1],
         score,
@@ -132,7 +134,7 @@ const scoreParser = async (
 
 export const parseAllSp = async (ver: string, setStatus) => {
   const scoreArray: musicData[] = [];
-  for (let level = 1; level <= 11; level++) {
+  for (let level = 0; level <= 11; level++) {
     const data = await scoreParser(ver, level, "SP", setStatus);
     scoreArray.push(...data);
   }
@@ -141,7 +143,7 @@ export const parseAllSp = async (ver: string, setStatus) => {
 
 export const parseAllDp = async (ver: string, setStatus) => {
   const scoreArray: musicData[] = [];
-  for (let level = 1; level <= 11; level++) {
+  for (let level = 0; level <= 11; level++) {
     const data = await scoreParser(ver, level, "DP", setStatus);
     scoreArray.push(...data);
   }
